@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.IO;
+namespace trafficnew
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            serialPort1.BaudRate = 9600;
+            serialPort1.PortName = "COM19";
+            serialPort1.Open();
+        }
+        int i = -1;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            i++;
+            if (i == 0)
+                label1.Location = new Point(124, 117);
+            if (i == 1)
+                label1.Location = new Point(151, 156);
+            if (i == 2)
+                label1.Location = new Point(168, 190);
+            if (i == 3)
+            {
+                label1.Location = new Point(171, 226);
+                if (serialPort1.IsOpen)
+                    serialPort1.WriteLine("a");
+                label2.BackColor = Color.Green;
+                label2.ForeColor = Color.Green;
+                label4.BackColor = Color.Red;
+                label4.ForeColor = Color.Red;
+            }    
+                
+            if (i == 4)
+                label1.Location = new Point(169, 258);
+            if (i == 5)
+                label1.Location = new Point(169, 290);
+            if (i == 6)
+                label1.Location = new Point(166, 321);
+            if (i == 7)
+                label1.Location = new Point(160, 376);
+            if (i == 8)
+                label1.Location = new Point(151, 436);
+            if (i == 9)
+            {
+                label1.Location = new Point(153, 512);
+                label2.BackColor = Color.Red;
+                label2.ForeColor = Color.Red;
+                label3.BackColor = Color.Green;
+                label3.ForeColor = Color.Green;
+            }
+            if (i == 10)
+                label1.Location = new Point(180, 557);
+            if (i == 11)
+                label1.Location = new Point(201, 607);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
