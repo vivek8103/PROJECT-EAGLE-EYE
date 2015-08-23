@@ -10,10 +10,11 @@
 #define green3 9
 #define yellow3 10
 
-char a;
+int interval = 2000;
 
 void setup()
 {
+  pinMode(13,OUTPUT);
   pinMode(red1,OUTPUT);
   pinMode(green1,OUTPUT);
   pinMode(yellow1,OUTPUT);
@@ -23,10 +24,47 @@ void setup()
   pinMode(red3,OUTPUT);
   pinMode(green3,OUTPUT);
   pinMode(yellow3,OUTPUT);
-  
+  pinMode(12,OUTPUT);
   Serial.begin(9600);
-  
-  
+}
+
+void loop()
+{
+   normal_mode();
+}
+void d()
+{
+  unsigned long previousMillis = millis();
+  unsigned long currentMillis = millis();
+  while (currentMillis - previousMillis < interval)
+  {
+    currentMillis = millis();
+    if(Serial.available()>0)
+    {
+      //Serial.println("READ");
+      char x = Serial.read();
+    if(x =='a')
+    {
+     // Serial.println("READ INSIDE");
+     digitalWrite(12,HIGH);
+      bypass_mode1();
+      digitalWrite(12,LOW);
+      //delay(2000);
+    }
+     if(x =='b')
+    {
+     // Serial.println("READ INSIDE");
+      bypass_mode2();
+      //delay(2000);
+    }
+     if(x =='c')
+    {
+     // Serial.println("READ INSIDE");
+      bypass_mode3();
+      //delay(2000);
+    }
+    }
+  }
 }
 
 void normal_mode()
@@ -45,7 +83,7 @@ void normal_mode()
  digitalWrite(green3,1);
  
  
- delay(5000);
+d();
  
   digitalWrite(red1,1);
  digitalWrite(red2,1);
@@ -59,7 +97,7 @@ void normal_mode()
  digitalWrite(green2,0);
  digitalWrite(green3,0);
  
-delay(2000);
+d();
 
   digitalWrite(red1,1);
  digitalWrite(red2,0);
@@ -73,7 +111,7 @@ delay(2000);
  digitalWrite(green2,0);
  digitalWrite(green3,0);
  
- delay(2000);
+d();
 
   digitalWrite(red1,1);
  digitalWrite(red2,0);
@@ -88,7 +126,7 @@ delay(2000);
  digitalWrite(green3,0);
  
  
- delay(5000);
+d();
 
   digitalWrite(red1,1);
  digitalWrite(red2,0);
@@ -102,7 +140,7 @@ delay(2000);
  digitalWrite(green2,0);
  digitalWrite(green3,0);
  
-  delay(2000);
+d();
 
   digitalWrite(red1,0);
  digitalWrite(red2,1);
@@ -116,9 +154,7 @@ delay(2000);
  digitalWrite(green2,0);
  digitalWrite(green3,0);
  
-  
-  delay(2000);
-
+  d();
   digitalWrite(red1,0);
  digitalWrite(red2,1);
  digitalWrite(red3,1);
@@ -131,7 +167,7 @@ delay(2000);
  digitalWrite(green2,0);
  digitalWrite(green3,0);
  
-   delay(5000);
+d();
 
   digitalWrite(red1,0);
  digitalWrite(red2,1);
@@ -145,7 +181,7 @@ delay(2000);
  digitalWrite(green2,0);
  digitalWrite(green3,0);
  
-    delay(2000);
+d();
 
   digitalWrite(red1,1);
  digitalWrite(red2,1);
@@ -158,16 +194,16 @@ delay(2000);
  digitalWrite(green1,0);
  digitalWrite(green2,0);
  digitalWrite(green3,0);
-  delay(2000);
+ d();
 }
 
 void bypass_mode1()
 {
-  
+  //Serial.println("abcd");
     digitalWrite(red1,0);
  digitalWrite(red2,1);
  digitalWrite(red3,1);
- 
+
  digitalWrite(yellow1,0);
  digitalWrite(yellow2,0);
  digitalWrite(yellow3,0);
@@ -176,10 +212,12 @@ void bypass_mode1()
  digitalWrite(green2,0);
  digitalWrite(green3,0);
  
+d();
   
 }
 void bypass_mode2()
 {
+ // Serial.println("abb");
      digitalWrite(red1,1);
  digitalWrite(red2,0);
  digitalWrite(red3,1);
@@ -188,14 +226,15 @@ void bypass_mode2()
  digitalWrite(yellow2,0);
  digitalWrite(yellow3,0);
  
- digitalWrite(green1,1);
- digitalWrite(green2,0);
+ digitalWrite(green1,0);
+ digitalWrite(green2,1);
  digitalWrite(green3,0);
-  
+  d();
 }
 
 void bypass_mode3()
 {
+  //Serial.println("ac");
  
       digitalWrite(red1,1);
  digitalWrite(red2,1);
@@ -208,21 +247,5 @@ void bypass_mode3()
  digitalWrite(green1,0);
  digitalWrite(green2,0);
  digitalWrite(green3,1);
-}
-void loop()
-{
-  
-  if(Serial.available())
-  {
-    a=Serial.read();
-  }
-  
-  if( a == 'a')
-  { bypass_mode1(); }
-  else if ( a == 'b')
-  { bypass_mode2(); }
-  else if ( a == 'c')
-  { bypass_mode3(); }
-  else
-   normal_mode();
+ d();
 }
