@@ -24,7 +24,9 @@ void setup() {
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
   pinMode(9, OUTPUT);
+  pinMode(12,INPUT);
   writeDot(0);  // start with the "dot" off
+  Serial.begin(9600);
 }
 
 void writeDot(byte dot) {
@@ -38,11 +40,33 @@ void sevenSegWrite(byte digit) {
     ++pin;
   }
 }
-
+char x;byte temp,count;
 void loop() {
-  for (byte count = 10; count > 0; --count) {
-   delay(1000);
-   sevenSegWrite(count - 1); 
-  }
-  delay(4000);
+  for (count = 10; count > 0; --count) {
+   
+      sevenSegWrite(count - 1); 
+      delay(1000);
+   if(digitalRead(12)==HIGH)
+   {
+     //char x=Serial.read();
+    // if(x=='z')
+    // {
+       temp=count;
+       t();
+       break;
+     }
+    
+   }
+    //x='a';
+
+  delay(1000);
 }
+void t()
+{
+  for (count = temp; count > 0; --count) {
+   
+      sevenSegWrite(count - 1);
+      delay(250);
+  }
+} 
+  
